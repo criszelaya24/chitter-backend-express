@@ -1,4 +1,3 @@
-
 exports.hasEmtyfields = function(req, res, next) {
   const id = req.body.id;
   if ( id === "") {

@@ -1,7 +1,7 @@
 // allows to get information from post request
 const express = require("express");
 const routes = express.Router();
-const helpers = require("../middlewares/helpers")
+const helpers = require("../middlewares/auth")
 routes.use(express.json());
 routes.use(express.urlencoded({extended: true}));
 
