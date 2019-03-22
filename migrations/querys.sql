@@ -1,1 +1,2 @@
+CREATE DATABASE chitter;
 CREATE TABLE users(id SERIAL PRIMARY KEY, name VARCHAR(60) NOT NULL, username VARCHAR(60) NOT NULL unique, email TEXT NOT NULL unique, password TEXT NOT NULL);
