@@ -6,9 +6,8 @@ const validator = require("../middlewares/validators")
 const dotenv = require('dotenv');
 dotenv.config();
 const { Pool } = require('pg')
-const connectionString = process.env.DATABASE_URL
 const db = new Pool({
-  connectionString: connectionString,
+  connectionString: process.env.DATABASE_URL
 })
 // lines to use JSON on post request
 routes.use(express.json());
