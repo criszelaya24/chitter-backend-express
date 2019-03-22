@@ -1,1 +1,1 @@
-DATABASE_URL = postgres://{db_username}:{db_password}@{host}:{port}/{db_name}
+DATABASE_URL = postgresql://{db_username}:{db_password}@{host}:{port}/{db_name}
