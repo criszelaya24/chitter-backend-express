@@ -1,3 +1,4 @@
+
 exports.hasEmtyfields = function(req, res, next) {
   const name = req.body.name;
   const username = req.body.username;

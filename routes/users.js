@@ -1,4 +1,3 @@
-// allows to get information from post request
 const express = require("express");
 const routes = express.Router();
 const validator = require("../middlewares/validators")
