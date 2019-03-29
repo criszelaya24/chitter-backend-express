@@ -45,3 +45,9 @@ exports.logIn = function (req, res) {
           }
         })
       }
+
+  exports.loggOut = function(req, res) {
+    req.session.loggedIn = false
+    req.session.userId = ""
+    res.status(200).send({message: "user logged out successfully"})
+  }

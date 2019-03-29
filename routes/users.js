@@ -7,8 +7,10 @@ const user = require("../models/users")
 routes.use(express.json());
 routes.use(express.urlencoded({extended: true}));
 
-routes.post('/signup', validator.hasEmtyfieldsFornewUSer, user.newUser);
+routes.post('/signup', validator.isLoggedin, validator.hasEmtyfieldsFornewUSer, user.newUser);
 module.exports = routes;
 
 
-routes.post('/login', validator.hasEmtyfieldsforLogin, user.logIn);
+routes.post('/login',validator.isLoggedin, validator.hasEmtyfieldsforLogin, user.logIn);
+
+routes.get('/logout', validator.isNotLoggedin, user.loggOut)
