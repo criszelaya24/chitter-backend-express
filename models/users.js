@@ -11,13 +11,15 @@ exports.newUser = function(req, res){
         email: req.body.email,
         passwordHashed: hashedPassword
       }
-      db.query("INSERT INTO users(name, username, email, password) values ($1, $2, $3, $4)",
-      [newUser.name, newUser.username, newUser.email, newUser.passwordHashed], (err) => {
+      db.query("INSERT INTO users(name, username, email, password) values ($1, $2, $3, $4) RETURNING id",
+      [newUser.name, newUser.username, newUser.email, newUser.passwordHashed], function (err, result){
         if (err) {
-          res.status(302).json(err.detail);
+          res.status(302).json({error: err.detail});
           return
         }
-        res.status(200).json({message: "User save successfully"})
+        req.session.loggedIn = true
+        req.session.userId = result.rows[0].id
+        res.status(200).json({message: "user successfullycreated and logged in"})
       })
 }
 
@@ -35,9 +37,11 @@ exports.logIn = function (req, res) {
         user.hashedPassword = data.rows[0].password;
         const error = bcrypt.compareSync(user.plainPassword, user.hashedPassword)
           if (error) {
-            res.status(200).send("password correct")
+            req.session.loggedIn = true
+            req.session.userId = data.rows[0].id
+            res.status(200).send({message: 'User logged successfully'})
           } else{
-            res.status(302).send("password incorrect")
+            res.status(302).send({error: 'User not logged successfully'})
           }
         })
       }
