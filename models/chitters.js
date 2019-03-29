@@ -17,6 +17,6 @@ exports.new = function(req, res){
       res.status(302).send({error: err})
       return
     }
-    res.status(200).send({message: result.rows})
+    res.status(200).send({message: "Chitter saved successfully", data: result.rows})
   })
 }
