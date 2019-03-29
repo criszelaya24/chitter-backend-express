@@ -2,9 +2,9 @@ const db = require("../db/connection")
 const bcrypt = require('bcrypt');
 
 exports.newUser = function(req, res){
+  const salt = bcrypt.genSaltSync(10);
   const plainPassword = req.body.password;
-  const hashedPassword =  bcrypt.hashSync(plainPassword, 10)
-
+  const hashedPassword =  bcrypt.hashSync(plainPassword, salt)
   const newUser = {
         name: req.body.name,
         username: req.body.username,
@@ -24,18 +24,20 @@ exports.newUser = function(req, res){
 exports.logIn = function (req, res) {
   const user = {
         username: req.body.username,
-        plainPassword: req.body.username,
+        plainPassword: req.body.password,
         hashedPassword: ""
       }
       db.query("SELECT * from users WHERE username = $1", [user.username]).then(function (data){
+        if (data.rowCount === 0) {
+          res.status(302).send({error: "User doesn't exist"})
+          return
+        }
         user.hashedPassword = data.rows[0].password;
-        bcrypt.compare(user.plainPassword, user.hashedPassword).then(function (err) {
-          console.log(err) // always false, check 
-          if (err === false) {
+        const error = bcrypt.compareSync(user.plainPassword, user.hashedPassword)
+          if (error) {
             res.status(200).send("password correct")
+          } else{
+            res.status(302).send("password incorrect")
           }
-          res.status(302).send("password incorrect")
         })
-      })
-
-}
+      }
