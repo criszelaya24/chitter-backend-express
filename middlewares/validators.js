@@ -30,7 +30,6 @@ exports.isLoggedin = function(req, res, next){
 }
 
 exports.isNotLoggedin = function(req, res, next){
-  console.log(req.session.loggedIn);
   if (req.session.loggedIn === false) {
     res.status(302).send({error: "User not loggedIn"})
     return

@@ -41,7 +41,7 @@ exports.logIn = function (req, res) {
             req.session.userId = data.rows[0].id
             res.status(200).send({message: 'User logged successfully'})
           } else{
-            res.status(302).send({error: 'User not logged successfully'})
+            res.status(302).send({error: 'Password incorrect'})
           }
         })
       }
